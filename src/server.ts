@@ -1,17 +1,13 @@
-const http = require('http')
+import express from 'express';
+import console = require('node:console');
 
-const server = http.createServer((req, res) => {
-    res.setHeader('Content-type', 'text/plain')
+const port = 3000
+const app = express()
 
-    if (req.url === '/') {
-        res.statusCode = 200
-        res.end('Home pageeeee')
-    } else if (req.url === '/sobre') {
-        res.statusCode = 200
-        res.end('About page')
-    }
+app.get('/movies', (req, res) =>{
+    res.send('Listar filmes')
 })
 
-server.listen(3000, () => {
-    console.log('Servidor em iniciado em http://localhost:3000/');
+app.listen(port, () => {
+    console.log(`Servidor iniciado na porta ${port}`)
 })
