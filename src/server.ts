@@ -2,17 +2,20 @@ import express from "express";
 import console = require("node:console");
 import { PrismaClient } from "../src/generated/prisma";
 import log = require("node:console");
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from '../swagger.json'
 
 const port = 3000;
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.get("/movies", async (_, res) => {
   const movies = await prisma.movie.findMany({
     orderBy: {
-      title: "asc",
+      id: "asc",
     },
     include: {
       genres: true,
@@ -134,5 +137,5 @@ app.get("/movies/:genderName", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Servidor iniciado na porta http://localhost/${port}`);
+  console.log(`Servidor iniciado na porta http://localhost:${port}`);
 });
