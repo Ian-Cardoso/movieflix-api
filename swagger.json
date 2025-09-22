@@ -8,7 +8,7 @@
   "paths": {
     "/movies": {
       "get": {
-        "tags": ["Movies"],
+        "tags": ["Movie"],
         "summary": "Obter todos os filmes",
         "responses": {
           "200": {
@@ -29,7 +29,7 @@
     },
     "/movies/{id}": {
       "put": {
-        "tags": ["Movies"],
+        "tags": ["Movie"],
         "summary": "Atualizar um filme",
         "parameters": [
           {
@@ -67,7 +67,7 @@
       "delete": {
         "tags": ["Movie"],
         "summary": "Remover um filme",
-          "parameters": [
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -84,6 +84,39 @@
           },
           "404": {
             "description": "O filme não encontrado"
+          },
+          "500": {
+            "description": "Nâo foi possivel remover o filme"
+          }
+        }
+      }
+    },
+    "/movies/{genreName}": {
+      "get": {
+        "tags": ["Movie"],
+        "parameters": [
+          {
+            "name": "genreName",
+            "in": "path",
+            "required": true,
+            "description": "Nome do genero",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Movie"
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Nâo foi possivel remover o filme"
@@ -170,16 +203,16 @@
           },
           "language_id": {
             "type": "string",
-            "description": "Id da linga do filme" 
+            "description": "Id da linga do filme"
           },
           "oscar_count": {
             "type": "integer",
-            "description": "Quantidade de oscars do filme" 
+            "description": "Quantidade de oscars do filme"
           },
           "release_date": {
             "type": "string",
             "format": "date",
-            "description": "Data de lançamento do filme" 
+            "description": "Data de lançamento do filme"
           }
         }
       }
